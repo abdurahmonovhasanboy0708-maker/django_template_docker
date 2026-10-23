@@ -1,0 +1,18 @@
+{% extends "shop/base.html" %}
+{% block title %}{% if current %}{{ current.name }}{% else %}Bosh sahifa{% endif %}{% endblock %}
+{% block content %}
+<div class="cats">
+  <a href="{% url 'home' %}" class="{% if not current %}active{% endif %}">Hammasi</a>
+  {% for c in categories %}
+    <a href="{% url 'category' c.slug %}" class="{% if current and current.pk == c.pk %}active{% endif %}">{{ c.name }}</a>
+  {% endfor %}
+</div>
+{% if current %}<h2>{{ current.name }}</h2><p>{{ current.description }}</p>{% endif %}
+<div class="grid">
+  {% for p in products %}
+    {% include "shop/_card.html" %}
+  {% empty %}
+    <p>Mahsulot topilmadi.</p>
+  {% endfor %}
+</div>
+{% endblock %}
